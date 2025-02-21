@@ -12,6 +12,12 @@ Download/clone the directory, change into the directory, then install from sourc
 
 The project is set up so that pybind11 is installed as a build dependency. The core build has no other C++ or Python dependencies.
 
+You can add this to your own project's requirements with the following entry in your pyproject.toml file:
+```
+dependencies = [
+    "sax-ts @ git+https://github.com/steenrotsman/sax-ts.git",
+]
+```
 # References
 
 P. Patel, E. Keogh, J. Lin and S. Lonardi, "Mining motifs in massive time series databases," 2002 IEEE International Conference on Data Mining, 2002. Proceedings., Maebashi City, Japan, 2002, pp. 370-377, doi: 10.1109/ICDM.2002.1183925.
