@@ -7,7 +7,7 @@ np.random.seed(123)
 a = np.arange(20)
 b = np.random.random(1000)
 
-D = [a]
+D = [a, b]
 WIN = [8, 12, 16, 20]
 S = [2, 3, 5, 8]
 W = [3, 4, 5, 6, 7, 8]
