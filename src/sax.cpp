@@ -1,0 +1,72 @@
+#include "sax.h"
+#include <vector>
+#include <cmath>
+#include <algorithm>
+
+std::vector<std::vector<int>> sax(const std::vector<double>& ts, const int window, const int stride, const int w, const int alpha)
+{
+    int num_windows = (ts.size() - window) / stride + 1;
+    std::vector<std::vector<int>> windows(num_windows, std::vector<int>(w));
+    std::vector<double> window_segment(window);
+
+    for (int i = 0; i < num_windows; i++)
+    {
+        std::vector<double> window_segment(ts.begin() + i * stride, ts.begin() + i * stride + window);
+        znorm(window_segment, window);
+        discretise(window_segment, windows[i], window, w, alpha);
+    }
+    
+    return windows;
+}
+
+void znorm(std::vector<double> &window_segment, const int window)
+{
+    double sum = 0;
+    double sq_sum = 0;
+    for (double val : window_segment)
+    {
+        sum += val;
+    }
+    double mean = sum / static_cast<double>(window);
+    for (double val : window_segment)
+    {
+        sq_sum += (val - mean) * (val - mean);
+    }
+    double std_dev = std::sqrt(sq_sum / static_cast<double>(window));
+    for (double& val : window_segment)
+    {
+        val = (val - mean) / std_dev;
+    }
+}
+
+void discretise(std::vector<double> &window_segment, std::vector<int>& word, const int window, const int w, const int alpha)
+{
+    double symbol_sum = 0.0;
+    int a = 0;
+    int b = 0;
+    int window_index = 0;
+    int symbol_index = 0;
+    
+    for (int j = 0; j < window * w; j++)
+    {
+        symbol_sum += window_segment[window_index];
+        
+        // Count each value in window_segment w times
+        a = (a + 1) % w;
+        if (a == 0)
+        {
+            window_index += 1;
+        }
+
+        // In total, there are window * w additions, which should result in w symbols; each symbol consists of `window` values
+        b = (b + 1) % window;
+        if (b == 0)
+        {
+            // Find smallest index that is larger than PAA mean
+            word[symbol_index] = std::upper_bound(breakpoints[alpha].begin(), breakpoints[alpha].end(), symbol_sum / window) - breakpoints[alpha].begin();
+            symbol_index++;
+            symbol_sum = 0;
+        }
+    }
+
+}
