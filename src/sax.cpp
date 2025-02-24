@@ -9,7 +9,7 @@ std::vector<std::vector<int>> sax(const std::vector<double> &ts, const int windo
     std::vector<std::vector<int>> windows(num_windows, std::vector<int>(w));
     std::vector<double> window_segment(window);
 
-    for (int i = 0; i < num_windows; i++)
+    for (int i = 0; i < num_windows; ++i)
     {
         std::vector<double> window_segment(ts.begin() + i * stride, ts.begin() + i * stride + window);
         znorm(window_segment, window);
@@ -25,7 +25,7 @@ std::vector<std::vector<double>> paa(const std::vector<double> &ts, const int wi
     std::vector<std::vector<double>> windows(num_windows, std::vector<double>(w));
     std::vector<double> window_segment(window);
 
-    for (int i = 0; i < num_windows; i++)
+    for (int i = 0; i < num_windows; ++i)
     {
         std::vector<double> window_segment(ts.begin() + i * stride, ts.begin() + i * stride + window);
         znorm(window_segment, window);
@@ -63,7 +63,7 @@ void discretise(std::vector<double> &window_segment, std::vector<int> &word, con
     int window_index = 0;
     int symbol_index = 0;
     
-    for (int j = 0; j < window * w; j++)
+    for (int j = 0; j < window * w; ++j)
     {
         symbol_sum += window_segment[window_index];
         
@@ -80,7 +80,7 @@ void discretise(std::vector<double> &window_segment, std::vector<int> &word, con
         {
             // Find smallest index that is larger than PAA mean
             word[symbol_index] = std::upper_bound(breakpoints[alpha].begin(), breakpoints[alpha].end(), symbol_sum / window) - breakpoints[alpha].begin();
-            symbol_index++;
+            ++symbol_index;
             symbol_sum = 0;
         }
     }
@@ -94,7 +94,7 @@ void paa_window(std::vector<double> &window_segment, std::vector<double> &result
     int window_index = 0;
     int paa_index = 0;
     
-    for (int j = 0; j < window * w; j++)
+    for (int j = 0; j < window * w; ++j)
     {
         paa_sum += window_segment[window_index];
         
@@ -111,7 +111,7 @@ void paa_window(std::vector<double> &window_segment, std::vector<double> &result
         {
             // Find smallest index that is larger than PAA mean
             result_window[paa_index] = paa_sum / window;
-            paa_index++;
+            ++paa_index;
             paa_sum = 0;
         }
     }
