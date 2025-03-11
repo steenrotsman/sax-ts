@@ -74,10 +74,17 @@ void discretise(std::vector<double> &window_segment, std::vector<int> &word,
     // symbols; each symbol consists of `window` values
     b = (b + 1) % window;
     if (b == 0) {
+      symbol_sum /= window;
+
+      // Handle values close to 0
+      if (std::abs(symbol_sum) < EPSILON) {
+        symbol_sum = 0.0;
+      }
+
       // Find smallest index that is larger than PAA mean
       word[symbol_index] =
           std::upper_bound(breakpoints[alpha].begin(), breakpoints[alpha].end(),
-                           symbol_sum / window) -
+                           symbol_sum) -
           breakpoints[alpha].begin();
       ++symbol_index;
       symbol_sum = 0;
@@ -107,7 +114,6 @@ void paa_window(std::vector<double> &window_segment,
     // symbols; each symbol consists of `window` values
     b = (b + 1) % window;
     if (b == 0) {
-      // Find smallest index that is larger than PAA mean
       result_window[paa_index] = paa_sum / window;
       ++paa_index;
       paa_sum = 0;

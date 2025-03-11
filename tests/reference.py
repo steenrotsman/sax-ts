@@ -3,6 +3,8 @@
 import numpy as np
 from numpy.lib.stride_tricks import sliding_window_view
 
+EPSILON = 1e-6
+
 
 def discretise(ts, window, stride, w, alpha):
     # Create sliding windows and z-normalise each sliding window
@@ -15,7 +17,8 @@ def discretise(ts, window, stride, w, alpha):
     paa = windows[:, indices].mean(axis=2)
 
     # SAX
-    sax = np.digitize(paa, breakpoints[alpha])
+    paa[abs(paa) < EPSILON] = 0.0
+    sax = np.digitize(paa, np.array(breakpoints[alpha], dtype=np.float32))
 
     return sax.tolist()
 

@@ -17,7 +17,7 @@ void paa_window(std::vector<double> &window_segment,
                 std::vector<double> &result_window, const int window,
                 const int w);
 
-constexpr double EPSILON = 1e-10;
+constexpr double EPSILON = 1e-6;
 
 const std::vector<std::vector<double>> breakpoints{
     {},
