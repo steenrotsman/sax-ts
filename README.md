@@ -7,16 +7,19 @@ This package implements the Symbolic Aggregate approXimation (SAX) algorithm in 
 [Eamonn Keogh's SAX page](http://www.cs.ucr.edu/~eamonn/SAX.htm)
 
 # Installation
-Currently, only building from source is available. To build from source, make sure you have a C++ compiler and the header files for your Python version installed.
-Download/clone the directory, change into the directory, then install from source using `pip install .`, or, for testing `pip install ".[test]"`.
-
-The project is set up so that pybind11 is installed as a build dependency. The core build has no other C++ or Python dependencies.
-
-You can add this to your own project's requirements with the following entry in your pyproject.toml file:
+The easiest way to install `sax-ts` is via pip:
 ```
-dependencies = [
-    "sax-ts @ git+https://github.com/steenrotsman/sax-ts.git",
-]
+pip install sax-ts
+```
+
+If you want to run the tests locally, install the optional dependencies:
+```
+pip install "sax-ts[test]"
+```
+
+You can then import the `sax` and `paa` functions as follows:
+```Python
+from sax_ts import sax, paa
 ```
 # References
 
