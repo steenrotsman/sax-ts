@@ -19,8 +19,8 @@ def discretise(ts, window, stride, w, alpha):
     # SAX
     paa[abs(paa) < EPSILON] = 0.0
     sax = np.digitize(paa, np.array(breakpoints[alpha], dtype=np.float32))
-
-    return sax.tolist()
+    sax = [[chr(ord("a") + x) for x in row] for row in sax]
+    return sax
 
 
 def paa_window(ts, window, stride, w):

@@ -4,7 +4,7 @@
 #include <vector>
 #include <functional>
 
-std::vector<std::vector<int>> sax(const std::vector<double> &ts,
+std::vector<std::vector<char>> sax(const std::vector<double> &ts,
                                   const int window, const int stride,
                                   const int w, const int alpha);
 std::vector<std::vector<double>> paa(const std::vector<double> &ts,
@@ -12,7 +12,7 @@ std::vector<std::vector<double>> paa(const std::vector<double> &ts,
                                      const int w);
 
 void znorm(std::vector<double> &window_segment, const int window);
-void discretise(std::vector<double> &window_segment, std::vector<int> &word,
+void discretise(std::vector<double> &window_segment, std::vector<char> &word,
                 const int window, const int w, const int alpha);
 void paa_window(std::vector<double> &window_segment,
                 std::vector<double> &result_window, const int window,

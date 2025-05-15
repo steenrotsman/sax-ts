@@ -4,11 +4,11 @@
 #include <vector>
 
 // --- Public functions ---
-std::vector<std::vector<int>> sax(const std::vector<double> &ts,
+std::vector<std::vector<char>> sax(const std::vector<double> &ts,
                                   const int window, const int stride,
                                   const int w, const int alpha) {
   int num_windows = (ts.size() - window) / stride + 1;
-  std::vector<std::vector<int>> windows(num_windows, std::vector<int>(w));
+  std::vector<std::vector<char>> windows(num_windows, std::vector<char>(w));
   std::vector<double> window_segment(window);
 
   for (int i = 0; i < num_windows; ++i) {
@@ -55,13 +55,13 @@ void znorm(std::vector<double> &window_segment, const int window) {
   }
 }
 
-void discretise(std::vector<double> &window_segment, std::vector<int> &word,
+void discretise(std::vector<double> &window_segment, std::vector<char> &word,
                 const int window, const int w, const int alpha) {
   process_window(window_segment, window, w,
     [&](double avg, int idx) {
-      word[idx] = std::upper_bound(
+      word[idx] = static_cast<char>(std::upper_bound(
                       breakpoints[alpha].begin(), breakpoints[alpha].end(), avg
-                  ) - breakpoints[alpha].begin();
+                  ) - breakpoints[alpha].begin()) + 'a';
     }
   );
 }
