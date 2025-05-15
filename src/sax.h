@@ -2,6 +2,7 @@
 #define SAX_H
 
 #include <vector>
+#include <functional>
 
 std::vector<std::vector<int>> sax(const std::vector<double> &ts,
                                   const int window, const int stride,
@@ -16,6 +17,10 @@ void discretise(std::vector<double> &window_segment, std::vector<int> &word,
 void paa_window(std::vector<double> &window_segment,
                 std::vector<double> &result_window, const int window,
                 const int w);
+void process_window(
+    const std::vector<double> &window_segment,
+    int window, int w,
+    const std::function<void(double, int)> &on_symbol_complete);
 
 constexpr double EPSILON = 1e-6;
 
